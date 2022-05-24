@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="public/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="public/css/bootstrap.min.css"></link>
+    <script src="public/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link type="text/css" rel='stylesheet' href='/css/style.css'/>
+    <title>Document</title>
+    
+   
+</head >
+<body >
+  <div class="container" > 
+    <h2> <%= title %></h2>
+      
+    <form  name="partsearchform" action="/partsearch"    method="post"> 
+        Brand : 
+        <select name="vbrand">
+            <% for (const i in brand) { %>
+                <option value="<%= brand[i].brandname.trim() %>"> <%= brand[i].brandname.trim() %> </option>
+            <% } %>
+        </select>
+    <!--
+        Item : <select name="vitem">
+            <% for (const i in item) { %>
+                <option value="<%= item[i].itemname.trim() %>"> <%= item[i].itemname.trim() %> </option>
+                <% } %>
+        </select><br> -->
+    <br>
+    Item   :   <input list="itemslist" name="vitem" /></label>
+    <datalist id="itemslist">
+        <% for (const i in item) { %>
+            <option value="<%= item[i].itemname.trim() %>"> <%= item[i].itemname.trim() %> </option>
+            <% } %> 
+    </datalist><br>
+
+    Store : <select name="vstore">
+            <% for (const i in store) { %>
+                <option value="<%= store[i].StoreName.trim() %>"> <%= store[i].StoreName.trim() %> </option>
+                <% } %>
+        </select> 
+            <input id="sbmtbtn" type="submit" value="search" >
+        
+        <div>          
+            <table class="table table-dark table-striped" >
+                <thead>
+                    <tr>
+                    <th>ID</th>
+                    <th>store</th> 
+                    <th>Brand</th>
+                    <th>Item</th>
+                    <th>Size</th>
+                    <th>Qty</th>
+                    </tr>
+                </thead>
+
+        <%        
+            if(storewise.length!=0){
+            var i=1;
+            storewise.forEach(function(result){
+            %>
+            <tr>
+                <td><%=i; %></td>
+                <td><%=result.storename1 %></td>
+                <td><%=result.brandname.trim() %></td>
+                <td><%=result.Itemname.trim() %></td>
+                <td><%=result.size %></td>
+                <td><%=result.DefaultUnitQuantity %></td>
+
+            <!-- <td><a href="/part/edit/<%=result.id%>">Edit</a></td>
+                <td><a href="/part/delete/<%=result.id%>">Delete</a></td> -->
+            </tr>
+            <%  i++; }) %>
+            <% } else{ %>
+                <tr>
+                    <td colspan="7">No Data Found</td>
+                </tr>
+            <% } %>
+
+            </table>
+        </div>
+        </form>
+    </div>     
+</body>
+</html>

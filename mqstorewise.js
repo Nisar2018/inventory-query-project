@@ -1,14 +1,11 @@
+require("dotenv").config();
 const express = require('express');
 const path = require('path');
-const ejs = require('ejs');
 const bodyparser = require('body-parser');
-const sql = require('mssql');
 const app = express();
-const router =express.Router();
-//const config=require('./dbConfig');
 const storewiseselect= require('./operation/storewiseselect')
 
-var PORT = process.env.PORT || 8080;
+
 // set views file
 app.set('views', path.join(__dirname,'views'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -22,13 +19,11 @@ app.use(bodyparser.urlencoded({extended:false}));
 
 app.use('',storewiseselect);
 
-  // create web server
-  const  webserver = app.listen(process.env.PORT||5000, function(){
-       console.log('Node web server is running');
   
-//  app.listen(PORT, function(){
-//  console.log(`server listening on: ${PORT}`);
+ let port = process.env.PORT;
+ if (port == null || port == "") {
+   port = 5000;
+ }
+ app.listen(port);
 
-
-});
   
